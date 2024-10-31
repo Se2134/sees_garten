@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import "../style/nav_footer.css";
 import "../style/index_style.css";
+import "../style/projects_page.css"
 import Item from '../components/Item.astro';
 ---
 
@@ -9,12 +10,51 @@ import Item from '../components/Item.astro';
 	<main>
 		<h1>HOME</h1>
 
-		<ul role="list" class="projects_items">
-			<Item
-				href='/'
-				body='lol'
-				title='krass'
-			/>
-		</ul>
+		<div class="container">
+			<ul role="list" class="projects_items">
+				<Item
+					href='/'
+					title='Monstera Deliciosa'
+					type='Plant'
+					img='/src/images/plants/Monstera Deliciosa.png'
+				/>
+				<Item
+					href='/'
+					title='Monstera Deliciosa'
+					type='Plant'
+					img='/src/images/plants/Monstera Deliciosa.png'
+				/>
+				<Item
+					href='/'
+					title='Monstera Deliciosa'
+					type='Plant'
+					img='/src/images/plants/Monstera Deliciosa.png'
+				/>
+				<Item
+					href='/'
+					title='Monstera Deliciosa'
+					type='Plant'
+					img='/src/images/plants/Monstera Deliciosa.png'
+				/>
+				<Item
+					href='/'
+					title='Monstera Deliciosa'
+					type='Plant'
+					img='/src/images/plants/Monstera Deliciosa.png'
+				/>
+				<Item
+					href='/'
+					title='Monstera Deliciosa'
+					type='Plant'
+					img='/src/images/plants/Monstera Deliciosa.png'
+				/>
+			</ul>
+		</div>
 	</main>
 </Layout>
+
+<style>
+	ul{
+		column-count: 2;
+	}
+</style>

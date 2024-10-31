@@ -4,3 +4,7 @@
 div.hidden {
     display: none;
 }
+
+ul {
+    column-count: 2;
+}
