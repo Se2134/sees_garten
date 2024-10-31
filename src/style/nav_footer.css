@@ -1,0 +1,91 @@
+/* Footer */
+footer {
+    background-color: var(--primary);
+    color: var(--primary-content);
+    padding: 10px;
+    text-align: center;
+    margin-top: auto;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    float: left;
+    left: 50%;
+    transform: translate(10%, 0);
+    transition: 0.3s;
+}
+
+.scrolledDown.logo {
+    transform: translate(-40%, 0) scale(20%);
+}
+
+.scrolledUp.logo {
+    transform: translate(10%, 0) scale(100%);
+}
+
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    float: right;
+}
+  
+nav li {
+    float: left;
+    border-right: 2px solid var(--border);
+}
+
+nav li:last-child {
+    float: left;
+    border-right: none;
+}
+  
+nav li a {
+    display: block;
+    color: var(--primary-content);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+  
+/* Change the link color on hover */
+nav li a:hover, .dropdown:hover .projects {
+    background-color: var(--primary-content);
+    color: var(--primary);
+}
+
+/* Dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--primary-content);
+    color: var(--primary);
+  }
+  
+  .dropdown-content a {
+    color: var(--primary);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .dropdown-content a:hover {background-color: var(--background);}
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+/* Responsive navigation */
+@media screen and (max-width: 600px) {
+    nav li.right, 
+    nav li {float: none; border-right: none; border-bottom: 2px solid var(--border);}
+    nav li:last-child {border-bottom: none;}
+  }

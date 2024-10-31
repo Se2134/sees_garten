@@ -1,0 +1,78 @@
+@import "../values/colors.css";
+@import "nav_footer.css";
+@import "projects_page.css";
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Globale Stile */
+header {
+    background: linear-gradient(to left, var(--primary), var(--secondary));
+    color: var(--primary-content);
+    padding: 10px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: 0.3s;
+}
+
+article {
+    background-color: var(--background);
+    color: var(--copy);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+article p, article h2{
+    text-align: center;
+    mix-blend-mode: difference;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--copy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 20px;
+    text-align: center;
+    color: var(--primary-content);
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 20px;
+    text-align: center;
+    color: var(--primary-content);
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+a {
+    color: var(--copy);
+    text-decoration: none;
+}
