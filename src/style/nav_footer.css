@@ -14,21 +14,6 @@ nav {
     align-items: center;
 }
 
-.logo{
-    float: left;
-    left: 50%;
-    transform: translate(10%, 0);
-    transition: 0.3s;
-}
-
-.scrolledDown.logo {
-    transform: translate(-40%, 0) scale(20%);
-}
-
-.scrolledUp.logo {
-    transform: translate(10%, 0) scale(100%);
-}
-
 .navbar {
     list-style-type: none;
     margin: 0;

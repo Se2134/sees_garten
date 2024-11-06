@@ -1,4 +1,6 @@
 ---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
 	title: string;
@@ -18,29 +20,10 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<header id="header">
-			<nav id="nav">
-				<ul id="navbar" class="navbar">
-					<li><a class="home" href="/">Home</a></li>
-					<li class="dropdown">
-						<a class="projects" href="/projects#/projects/all">Projekte</a>
-						<div class="dropdown-content">
-							<a href="projects#/projects/projects">Projekte</a>
-							<a href="projects#/projects/plants">Pflanzen</a>
-							<a href="projects#/projects/animals">Tiere</a>
-						</div>
-					</li>
-					<li><a class="about" href="about">Über mich</a></li>
-				</ul>
-			</nav>
-		</header>
+		<Header/>
 
 		<slot />
 
-		<footer>
-			<h2>Kontakt</h2>
-			<p>Hier kannst du deine Kontaktdaten einfügen.</p>
-			<p>&copy; 2024 Meine Webseite. Alle Rechte vorbehalten.</p>
-		</footer>
+		<Footer />
 	</body>
 </html>

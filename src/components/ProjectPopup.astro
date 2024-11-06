@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import "../style/nav_footer.css";
+import "../style/index_style.css";
+
+import {db, Plants} from 'astro:db';
+
+
+if (Astro.request.method === 'POST') {
+  
+  const formData = await Astro.request.formData();
+  const name = formData.get('name');
+  const type = formData.get('type');
+  if (typeof name === 'string' && typeof type === 'string') {
+    // Insert form data into the Comment table
+    await db.insert(Plants).values({ name, type });
+  }
+}
+
+// Render the new list of comments on each request
+const comments = await db.select().from(Plants);
+---
+
+<form method="POST" style="display: grid">
+	<label for="name">Name</label>
+	<input id="name" name="name" />
+	
+	<label for="type">Type</label>
+	<textarea id="type" name="type"></textarea>
+	
+	<button type="submit">Submit</button>
+</form>

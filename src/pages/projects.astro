@@ -4,50 +4,73 @@ import "../style/nav_footer.css";
 import "../style/index_style.css";
 import "../style/projects_page.css"
 import Item from '../components/Item.astro';
+
+import {db, Plants} from 'astro:db';
+
+const plants = await db.select().from(Plants);
 ---
 
 <Layout title="See's Garten">
 	<main>
-		<h1>HOME</h1>
+		<div class="container project-nav">
+			<div class="project-nav-content">
+				<li class="dropdown">
+					<a class="plants" href="projects#/projects/plants">Pflanzen</a>
+					<div class="dropdown-content">
+						<a href="projects#/projects/aeroids">Aronstäbe</a>
+						<a href="projects#/projects/waterplants">Wasserpflanzen</a>
+					</div>
+				</li>
 
+				<li class="dropdown">
+					<a href="projects#/projects/animals">Tiere</a>
+					<div class="dropdown-content">
+						<a href="projects#/projects/fish">Fische</a>
+						<a href="projects#/projects/food">Futtertiere</a>
+						<a href="projects#/projects/insects">Insekten</a>
+						<a href="projects#/projects/spiders">Spinnen</a>
+						<a href="projects#/projects/shrimp">Garnelen</a>
+						<a href="projects#/projects/snake">Schlangen</a>
+						<a href="projects#/projects/cleaningcrew">Aufräumcrew</a>
+						<a href="projects#/projects/frogs">Frösche</a>
+						<a href="projects#/projects/krabbs">Krabben</a>
+					</div>
+				</li>
+
+				<li class="dropdown">
+					<a class="projects" href="projects#/projects/projects">Projekte</a>
+					<div class="dropdown-content">
+						<a href="projects#/projects/aquarium">Aquarien</a>
+						<a href="projects#/projects/terrarium">Terrarien</a>
+					</div>
+				</li>
+
+				<li class="dropdown">
+					<a class="container" href="projects#/projects/container">Behälter</a>
+					<div class="dropdown-content">
+						<a href="projects#/projects/aquarium_container">Aquarien</a>
+						<a href="projects#/projects/terrarium_container">Terrarien</a>
+						<a href="projects#/projects/pots">Töpfe</a>
+						<a href="projects#/projects/bowls">Schalen</a>
+						<a href="projects#/projects/jars">Gläser</a>
+					</div>
+				</li>
+			</div>
+
+			<div class="project-nav-add">
+				<li><a href="/">+</a></li>
+			</div>
+		</div>
 		<div class="container">
 			<ul role="list" class="projects_items">
-				<Item
-					href='/'
-					title='Monstera Deliciosa'
-					type='Plant'
-					img='/src/images/plants/Monstera Deliciosa.png'
-				/>
-				<Item
-					href='/'
-					title='Monstera Deliciosa'
-					type='Plant'
-					img='/src/images/plants/Monstera Deliciosa.png'
-				/>
-				<Item
-					href='/'
-					title='Monstera Deliciosa'
-					type='Plant'
-					img='/src/images/plants/Monstera Deliciosa.png'
-				/>
-				<Item
-					href='/'
-					title='Monstera Deliciosa'
-					type='Plant'
-					img='/src/images/plants/Monstera Deliciosa.png'
-				/>
-				<Item
-					href='/'
-					title='Monstera Deliciosa'
-					type='Plant'
-					img='/src/images/plants/Monstera Deliciosa.png'
-				/>
-				<Item
-					href='/'
-					title='Monstera Deliciosa'
-					type='Plant'
-					img='/src/images/plants/Monstera Deliciosa.png'
-				/>
+				{plants.map(({ name, type}) => (
+					<Item
+						href="/"
+						title={name}
+						type={type}
+						img="/src/images/plants/Monstera Deliciosa.png"
+						/>
+				))}
 			</ul>
 		</div>
 	</main>
