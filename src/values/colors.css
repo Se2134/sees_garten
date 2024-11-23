@@ -1,14 +1,11 @@
 :root {
+    /* primary */
     --primary: #4d976b;
     --primary-content: #edf6f1;
     --primary-dark: #3c7553;
     --primary-light: #66b184;
-    
-    --secondary: #4d7997;
-    --secondary-content: #edf2f6;
-    --secondary-dark: #3c5e75;
-    --secondary-light: #6693b1;
-    
+
+    /* darkmode 5 steps left of end */
     --background: #141f18;
     --foreground: #1e2f25;
     --border: #314e3d;
@@ -16,6 +13,36 @@
     --copy: #fafcfb;
     --copy-light: #d0e1d7;
     --copy-lighter: #92baa2;
+    
+    /* 60 hue degrees */
+    --secondary: #4d7997;
+    --secondary-content: #edf2f6;
+    --secondary-dark: #3c5e75;
+    --secondary-light: #6693b1;
+
+    --secondary-background: #141b1f;
+    --secondary-foreground: #1e282f;
+    --secondary-border: #31424e;
+    
+    /* 120 hue degrees */
+    --tertiary: #6b4d97;
+    --tertiary-content: #f1edf6;
+    --tertiary-dark: #533c75;
+    --tertiary-light: #8466b1;
+
+    --tertiary-background: #18141f;
+    --tertiary-foreground: #251e2f;
+    --tertiary-border: #3d314e;
+    
+    /* 240 hue degrees */
+    --quaternary: #976b4d;
+    --quaternary-content: #f6f1ed;
+    --quaternary-dark: #75533c;
+    --quaternary-light: #b18466;
+
+    --quaternary-background: #1f1814;
+    --quaternary-foreground: #2f251e;
+    --quaternary-border: #4e3d31;
     
     --success: #4d974d;
     --warning: #97974d;
