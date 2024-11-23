@@ -4,10 +4,14 @@ import "../style/nav_footer.css";
 import "../style/index_style.css";
 import "../style/projects_page.css"
 import Item from '../components/Item.astro';
+import ProjectPopup from '../components/ProjectPopup.astro';
 
-import {db, Plants} from 'astro:db';
+import {db, Plants, MyProjects, Animals, Equipment} from 'astro:db';
 
 const plants = await db.select().from(Plants);
+const myprojects = await db.select().from(MyProjects);
+const animals = await db.select().from(Animals);
+const equipment = await db.select().from(Equipment);
 ---
 
 <Layout title="See's Garten">
@@ -57,11 +61,27 @@ const plants = await db.select().from(Plants);
 				</li>
 			</div>
 
-			<div class="project-nav-add">
-				<li><a href="/">+</a></li>
-			</div>
+			<button data-projectAdd-button type="button" id="project-nav-add">
+				+
+			</button>
+
+			<script>
+				const buttons = document.querySelectorAll('[data-projectAdd-button]');
+				buttons.forEach( (button) => {
+					button.addEventListener('click', () => {
+						const addPopup = document.getElementById("popupContainer");
+						addPopup?.classList.remove("hidden");
+					});
+				})
+			</script>
+
 		</div>
 		<div class="container">
+
+			<div id="popupContainer" class="hidden">
+				<ProjectPopup id="addPopup"></ProjectPopup>
+			</div>
+
 			<ul role="list" class="projects_items">
 				{plants.map(({ name, type}) => (
 					<Item
@@ -71,13 +91,31 @@ const plants = await db.select().from(Plants);
 						img="/src/images/plants/Monstera Deliciosa.png"
 						/>
 				))}
+				{animals.map(({ name, type}) => (
+					<Item
+						href="/"
+						title={name}
+						type={type}
+						img="/src/images/plants/Monstera Deliciosa.png"
+					/>
+				))}
+				{myprojects.map(({ name, type}) => (
+					<Item
+						href="/"
+						title={name}
+						type={type}
+						img="/src/images/plants/Monstera Deliciosa.png"
+					/>
+				))}
+				{equipment.map(({ name, type}) => (
+					<Item
+						href="/"
+						title={name}
+						type={type}
+						img="/src/images/plants/Monstera Deliciosa.png"
+					/>
+				))}
 			</ul>
 		</div>
 	</main>
 </Layout>
-
-<style>
-	ul{
-		column-count: 2;
-	}
-</style>

@@ -1,4 +1,4 @@
-import { db, Plants, Animals, Equipment, Projects } from 'astro:db';
+import { db, Plants, Animals, Equipment, MyProjects } from 'astro:db';
 
 // https://astro.build/db/seed
 export default async function seed() {
@@ -18,8 +18,8 @@ export default async function seed() {
 		{name: "Monsti", type: "aeroid",}
 	])
 
-	await db.insert(Projects).values([
-		{name: "Monstera Deliciosa db"},
-		{name: "Monsti"}
+	await db.insert(MyProjects).values([
+		{name: "Monstera Deliciosa db", type: "aeroid"},
+		{name: "Monsti", type: "aeroid"}
 	])
 }

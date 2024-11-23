@@ -17,7 +17,6 @@ ul {
 
 .project-nav {
     display: flex;
-    width: 1065px;
     align-items: center;
     gap: 28px;
 }
@@ -34,7 +33,7 @@ ul {
     background: var(--foreground);
 }
 
-.project-nav-add {
+#project-nav-add {
     display: flex;
     width: 54px;
     height: 54px;
@@ -56,4 +55,14 @@ ul {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+#popupContainer{
+    display: flex;
+    position: fixed;
+    opacity: 100;
+}
+
+#popupContainer.hidden{
+    display: none;
 }

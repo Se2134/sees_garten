@@ -1,19 +1,47 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import "../style/nav_footer.css";
-import "../style/index_style.css";
+import '../style/projectPopup.css'
 
 import {db, Plants} from 'astro:db';
 
 
 if (Astro.request.method === 'POST') {
-  
-  const formData = await Astro.request.formData();
-  const name = formData.get('name');
-  const type = formData.get('type');
-  if (typeof name === 'string' && typeof type === 'string') {
-    // Insert form data into the Comment table
-    await db.insert(Plants).values({ name, type });
+  try {
+    const formData = await Astro.request.formData();
+    const type = formData.get('type');
+    const name = formData.get('name');
+    const lat_name = formData.get('lat_name');
+    const picture = formData.get('picture');
+    const size = formData.get('size');
+    const propergation = formData.get('propergation');
+    const light = formData.get('light');
+    const water = formData.get('water');
+    const notes = formData.get('notes');
+    if (
+      typeof name === 'string' && 
+      typeof type === 'string' && 
+      typeof lat_name === 'string' && 
+      typeof picture === 'string' && 
+      typeof size === 'string' && 
+      typeof propergation === 'string' && 
+      typeof light === 'string' && 
+      typeof water === 'string' && 
+      typeof notes === 'string') {
+      // Insert form data into the Comment table
+      await db.insert(Plants).values({ 
+        name, 
+        lat_name, 
+        type, 
+        size, 
+        picture, 
+        propergation, 
+        light, 
+        water, 
+        notes });
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
   }
 }
 
@@ -22,11 +50,61 @@ const comments = await db.select().from(Plants);
 ---
 
 <form method="POST" style="display: grid">
-	<label for="name">Name</label>
-	<input id="name" name="name" />
+
+  <label class="type">Type
+    <select name="type" required>
+      <option value="plant">Pflanze</option>
+      <option value="animal">Tier</option>
+      <option value="project">Projekt</option>
+      <option value="equipment">Zubehör</option>
+    </select>
+  </label>
+
+	<label>Name
+    <input type="text" name="name" required/>
+  </label>
+
+  <label>lat. Name
+    <input type="text" name="lat_name"/>
+  </label>
+
+  <label>Picture
+    <input type="text" name="picture"/>
+  </label>
+
+  <label>Size
+    <input type="text" name="size"/>
+  </label>
+
+  <label>Propergation
+    <input type="text" name="propergation"/>
+  </label>
+
+  <label>Light
+    <input type="text" name="light"/>
+  </label>
+
+  <label>Water
+    <input type="text" name="water"/>
+  </label>
+
+  <label>Notes
+    <input type="text" name="notes"/>
+  </label>
 	
-	<label for="type">Type</label>
-	<textarea id="type" name="type"></textarea>
-	
-	<button type="submit">Submit</button>
+  <div class="container buttons">
+    <button data-cancel-button type="reset">Cancel</button>
+    <button type="submit">Submit</button>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('[data-cancel-button]');
+    buttons.forEach( (button) => {
+      button.addEventListener('click', () => {
+        const addPopup = document.getElementById("popupContainer");
+        addPopup?.classList.add("hidden");
+      });
+    })
+  </script>
+
 </form>

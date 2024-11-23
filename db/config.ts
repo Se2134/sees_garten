@@ -8,6 +8,7 @@ const Plants = defineTable({
     lat_name: column.text({default: "/"}),
     type: column.text({default: "/"}),
     size: column.text({default: "/"}),
+    picture: column.text({default: "/"}),
     propergation: column.text({default: "/"}),
     light: column.text({default: "/"}),
     water: column.text({default: "/"}),
@@ -15,13 +16,14 @@ const Plants = defineTable({
   }
 })
 
-const Projects = defineTable({
+const MyProjects = defineTable({
   columns: {
     idprojects: column.number({primaryKey: true}),
     name: column.text({default: "/"}),
-    container: column.number({references: () => Equipment.columns.idequipment, default: 0}),
-    plants: column.number({references: () => Plants.columns.idplants, default: 0}),
-    animals: column.number({references: () => Animals.columns.idanimals, default: 0}),
+    type: column.text({default: "/"}),
+    container: column.number({references: () => Equipment.columns.idequipment, default: 1}),
+    plants: column.number({references: () => Plants.columns.idplants, default: 1}),
+    animals: column.number({references: () => Animals.columns.idanimals, default: 1}),
     notes: column.text({default: "/"})
   }
 })
@@ -53,5 +55,5 @@ const Equipment = defineTable({
 
 // https://astro.build/db/config
 export default defineDb({
-  tables: { Plants, Animals, Equipment, Projects },
+  tables: { Plants, Animals, Equipment, MyProjects },
 });
