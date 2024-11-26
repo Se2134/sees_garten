@@ -43,7 +43,7 @@ input{
     background: var(--primary-content);
 }
 
-label.type{
+label.dbtype{
     display: flex;
     width: 203px;
     justify-content: space-between;

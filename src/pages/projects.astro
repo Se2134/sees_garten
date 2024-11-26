@@ -12,6 +12,11 @@ const plants = await db.select().from(Plants);
 const myprojects = await db.select().from(MyProjects);
 const animals = await db.select().from(Animals);
 const equipment = await db.select().from(Equipment);
+
+const planttypes = await db.selectDistinct({type: Plants.type}).from(Plants);
+const myprojecttypes = await db.select({type: MyProjects.type}).from(MyProjects);
+const animaltypes = await db.select({type: Animals.type}).from(Animals);
+const equipmenttypes = await db.select({type: Equipment.type}).from(Equipment);
 ---
 
 <Layout title="See's Garten">
@@ -19,44 +24,38 @@ const equipment = await db.select().from(Equipment);
 		<div class="container project-nav">
 			<div class="project-nav-content">
 				<li class="dropdown">
-					<a class="plants" href="projects#/projects/plants">Pflanzen</a>
+					<a class="plants" href="projects#/projects/plants">Plants</a>
 					<div class="dropdown-content">
-						<a href="projects#/projects/aeroids">Aronstäbe</a>
-						<a href="projects#/projects/waterplants">Wasserpflanzen</a>
+						{planttypes.map(({ type }) => (
+							<a href={"projects#/projects/" + type}>{type}</a>
+						))}
 					</div>
 				</li>
 
 				<li class="dropdown">
-					<a href="projects#/projects/animals">Tiere</a>
+					<a href="projects#/projects/animals">Animals</a>
 					<div class="dropdown-content">
-						<a href="projects#/projects/fish">Fische</a>
-						<a href="projects#/projects/food">Futtertiere</a>
-						<a href="projects#/projects/insects">Insekten</a>
-						<a href="projects#/projects/spiders">Spinnen</a>
-						<a href="projects#/projects/shrimp">Garnelen</a>
-						<a href="projects#/projects/snake">Schlangen</a>
-						<a href="projects#/projects/cleaningcrew">Aufräumcrew</a>
-						<a href="projects#/projects/frogs">Frösche</a>
-						<a href="projects#/projects/krabbs">Krabben</a>
+						{animaltypes.map(({ type }) => (
+							<a href={"projects#/projects/" + type}>{type}</a>
+						))}
 					</div>
 				</li>
 
 				<li class="dropdown">
-					<a class="projects" href="projects#/projects/projects">Projekte</a>
+					<a class="projects" href="projects#/projects/projects">Projects</a>
 					<div class="dropdown-content">
-						<a href="projects#/projects/aquarium">Aquarien</a>
-						<a href="projects#/projects/terrarium">Terrarien</a>
+						{myprojecttypes.map(({ type }) => (
+							<a href={"projects#/projects/" + type}>{type}</a>
+						))}
 					</div>
 				</li>
 
 				<li class="dropdown">
-					<a class="container" href="projects#/projects/container">Behälter</a>
+					<a class="container" href="projects#/projects/container">Equipment</a>
 					<div class="dropdown-content">
-						<a href="projects#/projects/aquarium_container">Aquarien</a>
-						<a href="projects#/projects/terrarium_container">Terrarien</a>
-						<a href="projects#/projects/pots">Töpfe</a>
-						<a href="projects#/projects/bowls">Schalen</a>
-						<a href="projects#/projects/jars">Gläser</a>
+						{equipmenttypes.map(({ type }) => (
+							<a href={"projects#/projects/" + type}>{type}</a>
+						))}
 					</div>
 				</li>
 			</div>
@@ -83,36 +82,40 @@ const equipment = await db.select().from(Equipment);
 			</div>
 
 			<ul role="list" class="projects_items">
-				{plants.map(({ name, type}) => (
+				{plants.map(({ name, type, idplants}) => (
 					<Item
-						href="/"
+						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-plants-${idplants}`}
 						title={name}
 						type={type}
 						img="/src/images/plants/Monstera Deliciosa.png"
+						itemType='plants'
 						/>
 				))}
-				{animals.map(({ name, type}) => (
+				{animals.map(({ name, type, idanimals}) => (
 					<Item
-						href="/"
+						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-animals-${idanimals}`}
 						title={name}
 						type={type}
 						img="/src/images/plants/Monstera Deliciosa.png"
+						itemType='animals'
 					/>
 				))}
-				{myprojects.map(({ name, type}) => (
+				{myprojects.map(({ name, type, idprojects}) => (
 					<Item
-						href="/"
+						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-myprojects-${idprojects}`}
 						title={name}
 						type={type}
 						img="/src/images/plants/Monstera Deliciosa.png"
+						itemType='myprojects'
 					/>
 				))}
-				{equipment.map(({ name, type}) => (
+				{equipment.map(({ name, type, idequipment}) => (
 					<Item
-						href="/"
+						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-equipment-${idequipment}`}
 						title={name}
 						type={type}
 						img="/src/images/plants/Monstera Deliciosa.png"
+						itemType='equipment'
 					/>
 				))}
 			</ul>

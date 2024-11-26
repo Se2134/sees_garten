@@ -1,0 +1,40 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import "../../style/nav_footer.css";
+import "../../style/index_style.css";
+import "../../style/projects_page.css"
+
+import {db, Plants, MyProjects, Animals, Equipment, eq} from 'astro:db';
+
+const path = Astro.url.pathname;
+const parts = path.split("/");
+const segments = parts[2].split("-");
+
+const id = Number(segments[segments.length - 1]);
+const itemType = segments[segments.length - 2];
+
+var title = "";
+
+switch (itemType){
+	case "plants":
+		const [plant] = await db.select().from(Plants).where(eq(Plants.idplants, id));
+		title = plant.name;
+		break;
+	case "projects":
+		const [myProject] = await db.select().from(MyProjects).where(eq(MyProjects.idprojects, id));
+		title = myProject.name;
+		break;
+	case "animals":
+		const [animal] = await db.select().from(Animals).where(eq(Animals.idanimals, id));
+		title = animal.name;
+		break;
+	case "equipment":
+		const [equipment] = await db.select().from(Equipment).where(eq(Equipment.idequipment, id));
+		title = equipment.name;
+		break;
+}
+---
+
+<Layout title={title}>
+
+</Layout>

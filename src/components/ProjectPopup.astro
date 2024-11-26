@@ -7,42 +7,54 @@ import {db, Plants} from 'astro:db';
 if (Astro.request.method === 'POST') {
   try {
     const formData = await Astro.request.formData();
-    const type = formData.get('type');
-    const name = formData.get('name');
-    const lat_name = formData.get('lat_name');
-    const picture = formData.get('picture');
-    const size = formData.get('size');
-    const propergation = formData.get('propergation');
-    const light = formData.get('light');
-    const water = formData.get('water');
-    const notes = formData.get('notes');
-    if (
-      typeof name === 'string' && 
-      typeof type === 'string' && 
-      typeof lat_name === 'string' && 
-      typeof picture === 'string' && 
-      typeof size === 'string' && 
-      typeof propergation === 'string' && 
-      typeof light === 'string' && 
-      typeof water === 'string' && 
-      typeof notes === 'string') {
-      // Insert form data into the Comment table
-      await db.insert(Plants).values({ 
-        name, 
-        lat_name, 
-        type, 
-        size, 
-        picture, 
-        propergation, 
-        light, 
-        water, 
-        notes });
-    }
-  } catch (error) {
+    switch (formData.get('dbtype')){
+      case 'plant':
+        const type = formData.get('type');
+        const name = formData.get('name');
+        const lat_name = formData.get('lat_name');
+        const picture = formData.get('picture');
+        const size = formData.get('size');
+        const propergation = formData.get('propergation');
+        const light = formData.get('light');
+        const water = formData.get('water');
+        const notes = formData.get('notes');
+        if (
+          typeof name === 'string' && 
+          typeof type === 'string' && 
+          typeof lat_name === 'string' && 
+          typeof picture === 'string' && 
+          typeof size === 'string' && 
+          typeof propergation === 'string' && 
+          typeof light === 'string' && 
+          typeof water === 'string' && 
+          typeof notes === 'string') {
+          // Insert form data into the Comment table
+          await db.insert(Plants).values({ 
+            name, 
+            lat_name, 
+            type, 
+            size, 
+            picture, 
+            propergation, 
+            light, 
+            water, 
+            notes });
+        }
+        break;
+      case 'animal':
+        break;
+      case 'project':
+        break;
+      case 'equipment':
+        break;
+      } 
+  }
+  catch (error) {
     if (error instanceof Error) {
       console.error(error.message);
     }
   }
+    
 }
 
 // Render the new list of comments on each request
@@ -51,12 +63,12 @@ const comments = await db.select().from(Plants);
 
 <form method="POST" style="display: grid">
 
-  <label class="type">Type
-    <select name="type" required>
-      <option value="plant">Pflanze</option>
-      <option value="animal">Tier</option>
-      <option value="project">Projekt</option>
-      <option value="equipment">Zubehör</option>
+  <label class="dbtype">Type
+    <select name="dbtype" required>
+      <option value="plant">Plant</option>
+      <option value="animal">Animal</option>
+      <option value="project">Project</option>
+      <option value="equipment">Equipment</option>
     </select>
   </label>
 
@@ -66,6 +78,10 @@ const comments = await db.select().from(Plants);
 
   <label>lat. Name
     <input type="text" name="lat_name"/>
+  </label>
+
+  <label>Type
+    <input type="text" name="type"/>
   </label>
 
   <label>Picture
