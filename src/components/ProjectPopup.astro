@@ -1,5 +1,7 @@
 ---
+import { ne } from 'astro:db';
 import '../style/projectPopup.css'
+import fs from 'fs';
 
 import {db, Plants, Animals, Equipment, MyProjects, Enums, ContainerForProject, PlantForProject, AnimalForProject, SubstrateForProject, HardscapeForProject, EquipmentForProject } from 'astro:db';
 
@@ -24,40 +26,49 @@ if (Astro.request.method === 'POST') {
         const subspecies = formData.get('subspecies') as string;
         const origin = formData.get('origin') as string;
         const location = formData.get('location') as string;
-        const got = formData.get('got') as unknown as Date;
-        const price = formData.get('price') as unknown as number;
+        const got = new Date(formData.get('got') as string);
+        const price = parseFloat(formData.get('price') as string);
         const substrate = formData.get('substrate') as string;
         const watering = formData.get('watering') as string;
         const fertilizing = formData.get('fertilizing') as string;
-        const repotted = formData.get('repotted') as unknown as Date;
+        const repotted = new Date(formData.get('repotted') as string);
         const health = formData.get('health') as string;
         const picture = formData.get('picture') as File;
         const notes = formData.get('notes') as string;
+
+        const idplant = plants[plants.length - 1].idplants + 1;
       
-        const picturePATH = "../images/plants/" + picture.name;
+        const picturePATH = "./src/images/plants/" + idplant + "_" + name + ".jpg";
+
+        if (picture){
+          const pictureBuffer = Buffer.from(await picture.arrayBuffer()); // Bild als Buffer konvertieren
+          fs.writeFileSync(picturePATH, pictureBuffer);
+        }
+
+        const values = {
+          name: name? name: 'N/A',
+          lat_name: lat_name? lat_name: 'N/A',
+          order: order? order: 'N/A',
+          genus: genus? genus: 'N/A',
+          family: family? family: 'N/A',
+          subfamily: subfamily? subfamily: 'N/A',
+          species: species? species: 'N/A',
+          subspecies: subspecies? subspecies: 'N/A',
+          origin: origin? origin: 'N/A',
+          location: location? location: 'N/A',
+          got: got? got: new Date(1, 1, 1),
+          price: price? price: 0,
+          substrate: substrate? substrate: 'N/A',
+          watering: watering? watering: 'N/A',
+          fertilizing: fertilizing? fertilizing: 'N/A',
+          repotted: repotted? repotted: new Date(1, 1, 1),
+          health: health? health: 'N/A',
+          picturePATH: picturePATH? picturePATH: 'N/A',
+          notes: notes? notes: 'N/A'
+        };
 
         // Insert form data into the Comment table
-        await db.insert(Plants).values({
-          name,
-          lat_name,
-          order,
-          genus,
-          family,
-          subfamily,
-          species,
-          subspecies,
-          origin,
-          location,
-          got,
-          price,
-          substrate,
-          watering,
-          fertilizing,
-          repotted,
-          health,
-          picturePATH,
-          notes
-        });
+        await db.insert(Plants).values(values);
         break;
       case 'animal':
         break;
