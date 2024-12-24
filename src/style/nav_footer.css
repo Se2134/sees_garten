@@ -41,7 +41,7 @@ nav li a {
 }
   
 /* Change the link color on hover */
-nav li a:hover, .dropdown:hover .projects {
+nav li a:hover, .dropdown:hover .projectsNav {
     background-color: var(--primary-content);
     color: var(--primary);
 }

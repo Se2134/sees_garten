@@ -4,20 +4,21 @@ import { db, Plants, Animals, Equipment, MyProjects } from 'astro:db';
 export default async function seed() {
 
 	await db.insert(Plants).values([
-		{name: "Monstera Deliciosa", type: "aeroid",},
-		{name: "Philodendron Verrucosum", type: "aeroid",}
+		{name: "Monstera Deliciosa", genus: "Monsteraoideae",},
+		{name: "Philodendron Verrucosum", genus: "Philodendreae",}
 	])
 
 	await db.insert(Animals).values([
-		{name: "Honiggurami", type: "labyrinthfish",},
-		{name: "Perlhuhnbärbling", type: "rasbora",}
+		{name: "Honiggurami", genus: "Labyrinthfish",},
+		{name: "Perlhuhnbärbling", genus: "Rasbora",}
 	])
 
 	await db.insert(Equipment).values([
-		{name: "Aquarium 120L", type: "container",},
+		{name: "Aquarium 120L", type: "Container",},
+		{name: "Aeroid Mix", type: "Substrate",},
 	])
 
 	await db.insert(MyProjects).values([
-		{name: "Altes AQ 2.0", type: "aquarium"},
+		{name: "Altes AQ 2.0", type: "Aquarium"},
 	])
 }

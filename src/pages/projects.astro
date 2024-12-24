@@ -13,9 +13,9 @@ const myprojects = await db.select().from(MyProjects);
 const animals = await db.select().from(Animals);
 const equipment = await db.select().from(Equipment);
 
-const planttypes = await db.selectDistinct({type: Plants.type}).from(Plants);
+const planttypes = await db.selectDistinct({type: Plants.genus}).from(Plants);
 const myprojecttypes = await db.select({type: MyProjects.type}).from(MyProjects);
-const animaltypes = await db.select({type: Animals.type}).from(Animals);
+const animaltypes = await db.select({type: Animals.genus}).from(Animals);
 const equipmenttypes = await db.select({type: Equipment.type}).from(Equipment);
 ---
 
@@ -33,7 +33,7 @@ const equipmenttypes = await db.select({type: Equipment.type}).from(Equipment);
 				</li>
 
 				<li class="dropdown">
-					<a href="projects#/projects/animals">Animals</a>
+					<a class="animals" href="projects#/projects/animals">Animals</a>
 					<div class="dropdown-content">
 						{animaltypes.map(({ type }) => (
 							<a href={"projects#/projects/" + type}>{type}</a>
@@ -82,22 +82,22 @@ const equipmenttypes = await db.select({type: Equipment.type}).from(Equipment);
 			</div>
 
 			<ul role="list" class="projects_items">
-				{plants.map(({ name, type, idplants}) => (
+				{plants.map(({ name, genus, idplants}) => (
 					<Item
 						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-plants-${idplants}`}
 						title={name}
-						type={type}
+						type={genus}
 						img="/src/images/plants/Monstera Deliciosa.png"
-						itemType='plants'
+						itemType='plantsItem'
 						/>
 				))}
-				{animals.map(({ name, type, idanimals}) => (
+				{animals.map(({ name, genus, idanimals}) => (
 					<Item
 						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-animals-${idanimals}`}
 						title={name}
-						type={type}
+						type={genus}
 						img="/src/images/plants/Monstera Deliciosa.png"
-						itemType='animals'
+						itemType='animalsItem'
 					/>
 				))}
 				{myprojects.map(({ name, type, idprojects}) => (
@@ -106,7 +106,7 @@ const equipmenttypes = await db.select({type: Equipment.type}).from(Equipment);
 						title={name}
 						type={type}
 						img="/src/images/plants/Monstera Deliciosa.png"
-						itemType='myprojects'
+						itemType='myprojectsItem'
 					/>
 				))}
 				{equipment.map(({ name, type, idequipment}) => (
@@ -115,7 +115,7 @@ const equipmenttypes = await db.select({type: Equipment.type}).from(Equipment);
 						title={name}
 						type={type}
 						img="/src/images/plants/Monstera Deliciosa.png"
-						itemType='equipment'
+						itemType='equipmentItem'
 					/>
 				))}
 			</ul>

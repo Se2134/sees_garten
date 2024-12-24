@@ -1,45 +1,63 @@
 ---
 import '../style/projectPopup.css'
 
-import {db, Plants} from 'astro:db';
+import {db, Plants, Animals, Equipment, MyProjects, Enums, ContainerForProject, PlantForProject, AnimalForProject, SubstrateForProject, HardscapeForProject, EquipmentForProject } from 'astro:db';
 
+const plants = await db.select().from(Plants);
+const myprojects = await db.select().from(MyProjects);
+const animals = await db.select().from(Animals);
+const equipment = await db.select().from(Equipment);
+const enums = await db.select().from(Enums);
 
 if (Astro.request.method === 'POST') {
   try {
     const formData = await Astro.request.formData();
     switch (formData.get('dbtype')){
       case 'plant':
-        const type = formData.get('type');
-        const name = formData.get('name');
-        const lat_name = formData.get('lat_name');
-        const picture = formData.get('picture');
-        const size = formData.get('size');
-        const propergation = formData.get('propergation');
-        const light = formData.get('light');
-        const water = formData.get('water');
-        const notes = formData.get('notes');
-        if (
-          typeof name === 'string' && 
-          typeof type === 'string' && 
-          typeof lat_name === 'string' && 
-          typeof picture === 'string' && 
-          typeof size === 'string' && 
-          typeof propergation === 'string' && 
-          typeof light === 'string' && 
-          typeof water === 'string' && 
-          typeof notes === 'string') {
-          // Insert form data into the Comment table
-          await db.insert(Plants).values({ 
-            name, 
-            lat_name, 
-            type, 
-            size, 
-            picture, 
-            propergation, 
-            light, 
-            water, 
-            notes });
-        }
+        const name = formData.get('name') as string;
+        const lat_name = formData.get('lat_name') as string;
+        const order = formData.get('order') as string;
+        const genus = formData.get('genus') as string;
+        const family = formData.get('family') as string;
+        const subfamily = formData.get('subfamily') as string;
+        const species = formData.get('species') as string;
+        const subspecies = formData.get('subspecies') as string;
+        const origin = formData.get('origin') as string;
+        const location = formData.get('location') as string;
+        const got = formData.get('got') as unknown as Date;
+        const price = formData.get('price') as unknown as number;
+        const substrate = formData.get('substrate') as string;
+        const watering = formData.get('watering') as string;
+        const fertilizing = formData.get('fertilizing') as string;
+        const repotted = formData.get('repotted') as unknown as Date;
+        const health = formData.get('health') as string;
+        const picture = formData.get('picture') as File;
+        const notes = formData.get('notes') as string;
+      
+        const picturePATH = "../images/plants/" + picture.name;
+
+        // Insert form data into the Comment table
+        await db.insert(Plants).values({
+          name,
+          lat_name,
+          order,
+          genus,
+          family,
+          subfamily,
+          species,
+          subspecies,
+          origin,
+          location,
+          got,
+          price,
+          substrate,
+          watering,
+          fertilizing,
+          repotted,
+          health,
+          picturePATH,
+          notes
+        });
         break;
       case 'animal':
         break;
@@ -56,15 +74,12 @@ if (Astro.request.method === 'POST') {
   }
     
 }
-
-// Render the new list of comments on each request
-const comments = await db.select().from(Plants);
 ---
 
-<form method="POST" style="display: grid">
+<form method="POST" autocomplete="off" enctype="multipart/form-data">
 
   <label class="dbtype">Type
-    <select name="dbtype" required>
+    <select name="dbtype" id="dbtype" required>
       <option value="plant">Plant</option>
       <option value="animal">Animal</option>
       <option value="project">Project</option>
@@ -72,41 +87,476 @@ const comments = await db.select().from(Plants);
     </select>
   </label>
 
-	<label>Name
-    <input type="text" name="name" required/>
-  </label>
+  <div id="plant" class="valuesWrapper">
+    <div class="group">
+      <label>Name
+        <input list="plantNames" type="text" name="name" id="plantName"/>
+        <datalist id="plantNames">
+          {plants.map(plant => (
+            <option value={plant.name}/>
+          ))}
+        </datalist>
+      </label>
+    
+      <label>lat. Name
+        <input list="plantLatNames" type="text" name="lat_name"/>
+        <datalist id="plantLatNames">
+          {plants.map(plant => (
+            <option value={plant.lat_name}/>
+          ))}
+        </datalist>
+      </label>
+    </div>
 
-  <label>lat. Name
-    <input type="text" name="lat_name"/>
-  </label>
+    <div class="group">
+      <label>Order
+        <input list="plantOrders" type="text" name="order"/>
+        <datalist id="plantOrders">
+          {plants.map(plant => (
+            <option value={plant.order}/>
+          ))}
+        </datalist>
+      </label>
 
-  <label>Type
-    <input type="text" name="type"/>
-  </label>
+      <label>Genus
+        <input list="plantGenus" type="text" name="Genus"/>
+        <datalist id="plantGenus">
+          {plants.map(plant => (
+            <option value={plant.genus}/>
+          ))}
+        </datalist>
+      </label>
+    </div>
 
-  <label>Picture
-    <input type="text" name="picture"/>
-  </label>
+    <div class="group">
+      <label>Family
+        <input list="plantFamily" type="text" name="family"/>
+        <datalist id="plantFamily">
+          {plants.map(plant => (
+            <option value={plant.family}/>
+          ))}
+        </datalist>
+      </label>
 
-  <label>Size
-    <input type="text" name="size"/>
-  </label>
+      <label>Subfamily
+        <input list="plantSubfamily" type="text" name="subfamily"/>
+        <datalist id="plantSubfamily">
+          {plants.map(plant => (
+            <option value={plant.subfamily}/>
+          ))}
+        </datalist>
+      </label>
+    </div>
 
-  <label>Propergation
-    <input type="text" name="propergation"/>
-  </label>
+    <div class="group">
+      <label>Species
+        <input list="plantSpecies" type="text" name="species"/>
+        <datalist id="plantSpecies">
+          {plants.map(plant => (
+            <option value={plant.species}/>
+          ))}
+        </datalist>
+      </label>
 
-  <label>Light
-    <input type="text" name="light"/>
-  </label>
+      <label>Subspecies
+        <input list="plantSubspecies" type="text" name="subspecies"/>
+        <datalist id="plantSubspecies">
+          {plants.map(plant => (
+            <option value={plant.subspecies}/>
+          ))}
+        </datalist>
+      </label>
+    </div>
 
-  <label>Water
-    <input type="text" name="water"/>
-  </label>
+    <div class="group">
+      <label>Origin
+        <input list="plantOrigin" type="text" name="origin"/>
+        <datalist id="plantOrigin">
+          {plants.map(plant => (
+            <option value={plant.origin}/>
+          ))}
+        </datalist>
+      </label>
 
-  <label>Notes
-    <input type="text" name="notes"/>
-  </label>
+      <label>Location
+        <input list="plantLocation" type="text" name="location"/>
+        <datalist id="plantLocation">
+          {plants.map(plant => (
+            <option value={plant.location}/>
+          ))}
+        </datalist>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Got
+        <input type="date" name="got"/>
+      </label>
+
+      <label>Price
+        <input type="number" min="0" step="0.01" name="price" placeholder="0,00"/>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Substrate
+        <select name="substrate">
+          <option value="/">/</option>
+          {equipment.filter(equip => equip.type === 'Substrate').map(equip => (
+            <option value={equip.name}>{equip.name}</option>
+          ))}
+        </select>
+      </label>
+
+      <label>Watering
+        <input list="plantWatering" type="text" name="watering"/>
+        <datalist id="plantWatering">
+          {plants.map(plant => (
+            <option value={plant.watering}/>
+          ))}
+        </datalist>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Fertilizer
+        <select name="fertilizing">
+          <option value="/">/</option>
+          {equipment.filter(equip => equip.type === 'Fertilizer').map(equip => (
+            <option value={equip.name}>{equip.name}</option>
+          ))}
+        </select>
+      </label>
+
+      <label>Repotted
+        <input type="date" name="repotted"/>
+      </label>
+    </div>
+
+    <label>Health
+      <input type="text" name="health"/>
+    </label>
+
+    <label>Picture
+      <input type="file" name="picture" accept="image/*"/>
+    </label>
+
+    <label>Notes
+      <input type="text" name="notes"/>
+    </label>
+  </div>
+  
+  <div id="animal" class="valuesWrapper hidden">
+    <div class="group">
+      <label>Name
+        <input list="animalNames" type="text" name="name"/>
+        <datalist id="animalNames">
+          {animals.map(animal => (
+            <option value={animal.name}/>
+          ))}
+        </datalist>
+      </label>
+    
+      <label>lat. Name
+        <input list="animalLatNames" type="text" name="lat_name"/>
+        <datalist id="animalLatNames">
+          {animals.map(animal => (
+            <option value={animal.lat_name}/>
+          ))}
+        </datalist>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Order
+        <input list="animalOrder" type="text" name="order"/>
+        <datalist id="animalOrder">
+          {animals.map(animal => (
+            <option value={animal.order}/>
+          ))}
+        </datalist>
+      </label>
+
+      <label>Genus
+        <input list="animalGenus" type="text" name="Genus"/>
+        <datalist id="animalGenus">
+          {animals.map(animal => (
+            <option value={animal.genus}/>
+          ))}
+        </datalist>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Family
+        <input list="animalFamily" type="text" name="family"/>
+        <datalist id="animalFamily">
+          {animals.map(animal => (
+            <option value={animal.family}/>
+          ))}
+        </datalist>
+      </label>
+
+      <label>Subfamily
+        <input list="animalSubfamily" type="text" name="subfamily"/>
+        <datalist id="animalSubfamily">
+          {animals.map(animal => (
+            <option value={animal.subfamily}/>
+          ))}
+        </datalist>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Species
+        <input list="animalSpecies" type="text" name="species"/>
+        <datalist id="animalSpecies">
+          {animals.map(animal => (
+            <option value={animal.species}/>
+          ))}
+        </datalist>
+      </label>
+
+      <label>Subspecies
+        <input list="animalSubspecies" type="text" name="subspecies"/>
+        <datalist id="animalSubspecies">
+          {animals.map(animal => (
+            <option value={animal.subspecies}/>
+          ))}
+        </datalist>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Origin
+        <input list="animalOrigin" type="text" name="origin"/>
+        <datalist id="animalOrigin">
+          {animals.map(animal => (
+            <option value={animal.origin}/>
+          ))}
+        </datalist>
+      </label>
+
+      <label>Size
+        <input type="number" min="0" step="0.01" name="size" placeholder="0,00"/>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Got
+        <input type="date" name="got"/>
+      </label>
+
+      <label>Price
+        <input type="number" min="0" step="0.01" name="price" placeholder="0,00"/>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Count
+        <input type="number" min="0" step="1" name="count" placeholder="0"/>
+      </label>
+
+      <label>Sex
+        <select name="sex">
+          <option value=male>Male</option>
+          <option value="female">Female</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Age
+        <input type="number" min="0" step="0.5" name="age" placeholder="0"/>
+      </label>
+
+      <label>Sozial
+        <select name="sozial">
+          <option value="/">/</option>
+          {enums.filter(enums => enums.enumType === 'Sozial').map(enums => (
+            <option value={enums.enumValue}>{enums.enumValue}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Demands
+        <input type="text" name="damands"/>
+      </label>
+
+      <label>Food
+        <select name="food">
+          <option value="/">/</option>
+          {enums.filter(enums => enums.enumType === 'Food').map(enums => (
+            <option value={enums.enumValue}>{enums.enumValue}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Health
+        <input type="text" name="health"/>
+      </label>
+
+      <label>Reproduction
+        <select name="reproduction">
+          <option value="/">/</option>
+          {enums.filter(enums => enums.enumType === 'Reproduction').map(enums => (
+            <option value={enums.enumValue}>{enums.enumValue}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+
+    <label>Picture
+      <input type="file" name="picture"/>
+    </label>
+
+    <label>Notes
+      <input type="text" name="notes"/>
+    </label>
+  </div>
+
+  <div id="project" class="valuesWrapper hidden">
+    <div class="group">
+      <label>Name
+        <input type="text" name="name"/>
+      </label>
+    
+      <label>Container
+        <select name="container">
+          <option value="/">/</option>
+          {equipment.filter(equip => equip.type === 'Container').map(equip => (
+            <option value={equip.name}>{equip.name}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Equipment
+        <select name="equipment">
+          <option value="/">/</option>
+          {equipment.filter(equip => equip.type !== 'Container' && equip.type !== 'Substrate' && equip.type !== 'Hardscape' && equip.type !== 'Fertilizer').map(equip => (
+            <option value={equip.name}>{equip.name}</option>
+          ))}
+        </select>
+      </label>
+
+      <label>Maintenance
+        <input type="text" name="maintenance"/>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Substrate
+        <select name="substrate">
+          <option value="/">/</option>
+          {equipment.filter(equip => equip.type === 'Substrate').map(equip => (
+            <option value={equip.name}>{equip.name}</option>
+          ))}
+        </select>
+      </label>
+
+      <label>Hardscape
+        <select name="hardscape">
+          <option value="/">/</option>
+          {equipment.filter(equip => equip.type === 'Hardscape').map(equip => (
+            <option value={equip.name}>{equip.name}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Plants
+        <select name="container">
+          <option value="/">/</option>
+          {plants.map(plant => (
+            <option value={plant.name}>{plant.name}</option>
+          ))}
+        </select>
+      </label>
+
+      <label>Animals
+        <select name="animals">
+          <option value="/">/</option>
+          {animals.map(animal => (
+            <option value={animal.name}>{animal.name}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Got
+        <input type="date" name="got"/>
+      </label>
+
+      <label>Price
+        <input type="number" min="0" step="0.01" name="price" placeholder="0,00"/>
+      </label>
+    </div>
+
+    <label>Picture
+      <input type="file" name="picture"/>
+    </label>
+
+    <label>Notes
+      <input type="text" name="notes"/>
+    </label>
+  </div>
+
+  <div id="equipment" class="valuesWrapper hidden">
+    <div class="group">
+      <label>Name
+        <input type="text" name="name"/>
+      </label>
+    
+      <label>Type
+        <select name="type">
+          <option value="/">/</option>
+          {enums.filter(enums => enums.enumType === 'EquipmentType').map(enums => (
+            <option value={enums.enumValue}>{enums.enumValue}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Power
+        <input type="text" name="power"/>
+      </label>
+
+      <label>Specifications
+        <input type="text" name="specifications"/>
+      </label>
+    </div>
+
+    <div class="group">
+      <label>Maintinance
+        <input type="text" name="maintinance"/>
+      </label>
+
+      <label>Price
+        <input type="number" min="0" step="0.01" name="price" placeholder="0,00"/>
+      </label>
+    </div>
+
+    <label>Link
+      <input type="text" name="link"/>
+    </label>
+
+    <label>Picture
+      <input type="file" name="picture"/>
+    </label>
+
+    <label>Notes
+      <input type="text" name="notes"/>
+    </label>
+  </div>
 	
   <div class="container buttons">
     <button data-cancel-button type="reset">Cancel</button>
@@ -121,6 +571,36 @@ const comments = await db.select().from(Plants);
         addPopup?.classList.add("hidden");
       });
     })
+
+    const dbtype = document.getElementById('dbtype') as HTMLSelectElement;
+      dbtype?.addEventListener('change', () => {
+        switch (dbtype.value) {
+          case 'plant':
+            document.getElementById('plant')?.classList.remove('hidden');
+            document.getElementById('animal')?.classList.add('hidden');
+            document.getElementById('project')?.classList.add('hidden');
+            document.getElementById('equipment')?.classList.add('hidden');
+            break;
+          case 'animal':
+            document.getElementById('animal')?.classList.remove('hidden');
+            document.getElementById('plant')?.classList.add('hidden');
+            document.getElementById('project')?.classList.add('hidden');
+            document.getElementById('equipment')?.classList.add('hidden');
+            break;
+          case 'project':
+            document.getElementById('project')?.classList.remove('hidden');
+            document.getElementById('plant')?.classList.add('hidden');
+            document.getElementById('animal')?.classList.add('hidden');
+            document.getElementById('equipment')?.classList.add('hidden');
+            break;
+          case 'equipment':
+            document.getElementById('equipment')?.classList.remove('hidden');
+            document.getElementById('plant')?.classList.add('hidden');
+            document.getElementById('animal')?.classList.add('hidden');
+            document.getElementById('project')?.classList.add('hidden');
+            break;
+        }
+      })
   </script>
 
 </form>
