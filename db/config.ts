@@ -1,5 +1,4 @@
-import { build } from 'astro';
-import { column, count, defineDb, defineTable, eq } from 'astro:db';
+import { column, defineDb, defineTable } from 'astro:db';
 
 
 const Plants = defineTable({

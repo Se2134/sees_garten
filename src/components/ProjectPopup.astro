@@ -1,76 +1,143 @@
 ---
-import { ne } from 'astro:db';
-import '../style/projectPopup.css'
+import '../style/project_popup.css'
 import fs from 'fs';
 
 import {db, Plants, Animals, Equipment, MyProjects, Enums, ContainerForProject, PlantForProject, AnimalForProject, SubstrateForProject, HardscapeForProject, EquipmentForProject } from 'astro:db';
+import { eq } from 'astro:db';
+import { Console } from 'console';
 
-const plants = await db.select().from(Plants);
-const myprojects = await db.select().from(MyProjects);
-const animals = await db.select().from(Animals);
-const equipment = await db.select().from(Equipment);
-const enums = await db.select().from(Enums);
+var plants = await db.select().from(Plants);
+var myprojects = await db.select().from(MyProjects);
+var animals = await db.select().from(Animals);
+var equipment = await db.select().from(Equipment);
+var enums = await db.select().from(Enums);
 
 if (Astro.request.method === 'POST') {
   try {
     const formData = await Astro.request.formData();
     switch (formData.get('dbtype')){
       case 'plant':
-        const name = formData.get('name') as string;
-        const lat_name = formData.get('lat_name') as string;
-        const order = formData.get('order') as string;
-        const genus = formData.get('genus') as string;
-        const family = formData.get('family') as string;
-        const subfamily = formData.get('subfamily') as string;
-        const species = formData.get('species') as string;
-        const subspecies = formData.get('subspecies') as string;
-        const origin = formData.get('origin') as string;
-        const location = formData.get('location') as string;
-        const got = new Date(formData.get('got') as string);
-        const price = parseFloat(formData.get('price') as string);
-        const substrate = formData.get('substrate') as string;
-        const watering = formData.get('watering') as string;
-        const fertilizing = formData.get('fertilizing') as string;
-        const repotted = new Date(formData.get('repotted') as string);
-        const health = formData.get('health') as string;
-        const picture = formData.get('picture') as File;
-        const notes = formData.get('notes') as string;
+        const plant_name = formData.get('name') as string;
+        const plant_lat_name = formData.get('lat_name') as string;
+        const plant_order = formData.get('order') as string;
+        const plant_genus = formData.get('genus') as string;
+        const plant_family = formData.get('family') as string;
+        const plant_subfamily = formData.get('subfamily') as string;
+        const plant_species = formData.get('species') as string;
+        const plant_subspecies = formData.get('subspecies') as string;
+        const plant_origin = formData.get('origin') as string;
+        const plant_location = formData.get('location') as string;
+        const plant_got = new Date(formData.get('got') as string);
+        const plant_price = parseFloat(formData.get('price') as string);
+        const plant_substrate = formData.get('substrate') as string;
+        const plant_watering = formData.get('watering') as string;
+        const plant_fertilizing = formData.get('fertilizing') as string;
+        const plant_repotted = new Date(formData.get('repotted') as string);
+        const plant_health = formData.get('health') as string;
+        const plant_picture = formData.get('picture') as File;
+        const plant_notes = formData.get('notes') as string;
 
-        const idplant = plants[plants.length - 1].idplants + 1;
-      
-        const picturePATH = "./src/images/plants/" + idplant + "_" + name + ".jpg";
-
-        if (picture){
-          const pictureBuffer = Buffer.from(await picture.arrayBuffer()); // Bild als Buffer konvertieren
-          fs.writeFileSync(picturePATH, pictureBuffer);
-        }
-
-        const values = {
-          name: name? name: 'N/A',
-          lat_name: lat_name? lat_name: 'N/A',
-          order: order? order: 'N/A',
-          genus: genus? genus: 'N/A',
-          family: family? family: 'N/A',
-          subfamily: subfamily? subfamily: 'N/A',
-          species: species? species: 'N/A',
-          subspecies: subspecies? subspecies: 'N/A',
-          origin: origin? origin: 'N/A',
-          location: location? location: 'N/A',
-          got: got? got: new Date(1, 1, 1),
-          price: price? price: 0,
-          substrate: substrate? substrate: 'N/A',
-          watering: watering? watering: 'N/A',
-          fertilizing: fertilizing? fertilizing: 'N/A',
-          repotted: repotted? repotted: new Date(1, 1, 1),
-          health: health? health: 'N/A',
-          picturePATH: picturePATH? picturePATH: 'N/A',
-          notes: notes? notes: 'N/A'
+        const plant_values = {
+          name: plant_name? plant_name: 'N/A',
+          lat_name: plant_lat_name? plant_lat_name: 'N/A',
+          order: plant_order? plant_order: 'N/A',
+          genus: plant_genus? plant_genus: 'N/A',
+          family: plant_family? plant_family: 'N/A',
+          subfamily: plant_subfamily? plant_subfamily: 'N/A',
+          species: plant_species? plant_species: 'N/A',
+          subspecies: plant_subspecies? plant_subspecies: 'N/A',
+          origin: plant_origin? plant_origin: 'N/A',
+          location: plant_location? plant_location: 'N/A',
+          got: !(isNaN(plant_got.valueOf()))? plant_got: new Date(1, 1, 1),
+          price: plant_price? plant_price: 0,
+          substrate: plant_substrate? plant_substrate: 'N/A',
+          watering: plant_watering? plant_watering: 'N/A',
+          fertilizing: plant_fertilizing? plant_fertilizing: 'N/A',
+          repotted: !(isNaN(plant_repotted.valueOf()))? plant_repotted: new Date(1, 1, 1),
+          health: plant_health? plant_health: 'N/A',
+          notes: plant_notes? plant_notes: 'N/A'
         };
 
         // Insert form data into the Comment table
-        await db.insert(Plants).values(values);
+        await db.insert(Plants).values(plant_values);
+
+
+        if (plant_picture.size > 0) {
+          plants = await db.select().from(Plants);
+          const id = plants.findLast(plant => plant.name === plant_name)?.idplants;
+
+          const picturePATH = "./src/images/plants/" + id + "_" + plant_name + ".jpg";
+          const pictureBuffer = Buffer.from(await plant_picture.arrayBuffer()); // Bild als Buffer konvertieren
+          fs.writeFileSync(picturePATH, pictureBuffer);
+
+          if (id !== undefined) {
+            await db.update(Plants).set({picturePath: picturePATH}).where(eq(Plants.idplants, id));
+          }
+        }
         break;
       case 'animal':
+        const animal_name = formData.get('name') as string;
+        const animal_lat_name = formData.get('lat_name') as string;
+        const animal_order = formData.get('order') as string;
+        const animal_genus = formData.get('genus') as string;
+        const animal_family = formData.get('family') as string;
+        const animal_subfamily = formData.get('subfamily') as string;
+        const animal_species = formData.get('species') as string;
+        const animal_subspecies = formData.get('subspecies') as string;
+        const animal_origin = formData.get('origin') as string;
+        const animal_size = parseFloat(formData.get('size') as string);
+        const animal_got = new Date(formData.get('got') as string);
+        const animal_price = parseFloat(formData.get('price') as string);
+        const animal_count = parseInt(formData.get('count') as string);
+        const animal_sex = formData.get('sex') as string;
+        const animal_age = parseFloat(formData.get('age') as string);
+        const animal_sozial = formData.get('sozial') as string;
+        const animal_demands = formData.get('demands') as string;
+        const animal_food = formData.get('food') as string;
+        const animal_health = formData.get('health') as string;
+        const animal_reproduction = formData.get('reproduction') as string;
+        const animal_picture = formData.get('picture') as File;
+        const animal_notes = formData.get('notes') as string;
+
+        const animal_values = {
+          name: animal_name? animal_name: 'N/A',
+          lat_name: animal_lat_name? animal_lat_name: 'N/A',
+          order: animal_order? animal_order: 'N/A',
+          family: animal_family? animal_family: 'N/A',
+          subfamily: animal_subfamily? animal_subfamily: 'N/A',
+          genus: animal_genus? animal_genus: 'N/A',
+          species: animal_species? animal_species: 'N/A',
+          subspecies: animal_subspecies? animal_subspecies: 'N/A',
+          origin: animal_origin? animal_origin: 'N/A',
+          got: !(isNaN(animal_got.valueOf()))? animal_got: new Date(1, 1, 1),
+          count: animal_count? animal_count: 0,
+          sex: animal_sex? animal_sex: 'N/A',
+          size: animal_size? animal_size: 0,
+          age: animal_age? animal_age: 0,
+          food: animal_food? animal_food: 'N/A',
+          health: animal_health? animal_health: 'N/A',
+          demands: animal_demands? animal_demands: 'N/A',
+          sozial: animal_sozial? animal_sozial: 'N/A',
+          reproduction: animal_reproduction? animal_reproduction: 'N/A',
+          price: animal_price? animal_price: 0,
+          notes: animal_notes? animal_notes: 'N/A'
+          }
+
+          // Insert form data into the Comment table
+          await db.insert(Animals).values(animal_values);
+
+          if (animal_picture.size > 0) {
+            animals = await db.select().from(Animals);
+            const id = animals.findLast(animal => animal.name === animal_name)?.idanimals;
+
+            const picturePATH = "./src/images/animals/" + id + "_" + animal_name + ".jpg";
+            const pictureBuffer = Buffer.from(await animal_picture.arrayBuffer()); // Bild als Buffer konvertieren
+            fs.writeFileSync(picturePATH, pictureBuffer);
+
+            if (id !== undefined) {
+              await db.update(Plants).set({picturePath: picturePATH}).where(eq(Plants.idplants, id));
+            }
+        }
         break;
       case 'project':
         break;
@@ -101,7 +168,7 @@ if (Astro.request.method === 'POST') {
   <div id="plant" class="valuesWrapper">
     <div class="group">
       <label>Name
-        <input list="plantNames" type="text" name="name" id="plantName"/>
+        <input list="plantNames" type="text" name="name" id="plantName" required/>
         <datalist id="plantNames">
           {plants.map(plant => (
             <option value={plant.name}/>
@@ -260,7 +327,7 @@ if (Astro.request.method === 'POST') {
   <div id="animal" class="valuesWrapper hidden">
     <div class="group">
       <label>Name
-        <input list="animalNames" type="text" name="name"/>
+        <input list="animalNames" type="text" name="name" id="animalName"/>
         <datalist id="animalNames">
           {animals.map(animal => (
             <option value={animal.name}/>
@@ -433,7 +500,7 @@ if (Astro.request.method === 'POST') {
   <div id="project" class="valuesWrapper hidden">
     <div class="group">
       <label>Name
-        <input type="text" name="name"/>
+        <input type="text" name="name" id="projectName"/>
       </label>
     
       <label>Container
@@ -523,7 +590,7 @@ if (Astro.request.method === 'POST') {
   <div id="equipment" class="valuesWrapper hidden">
     <div class="group">
       <label>Name
-        <input type="text" name="name"/>
+        <input type="text" name="name" id="equipmentName"/>
       </label>
     
       <label>Type
@@ -591,27 +658,46 @@ if (Astro.request.method === 'POST') {
             document.getElementById('animal')?.classList.add('hidden');
             document.getElementById('project')?.classList.add('hidden');
             document.getElementById('equipment')?.classList.add('hidden');
+
+            document.getElementById('plantName')?.setAttribute('required', 'true');
+            document.getElementById('animalName')?.removeAttribute('required');
+            document.getElementById('projectName')?.removeAttribute('required');
+            document.getElementById('equipmentName')?.removeAttribute('required');
             break;
           case 'animal':
             document.getElementById('animal')?.classList.remove('hidden');
             document.getElementById('plant')?.classList.add('hidden');
             document.getElementById('project')?.classList.add('hidden');
             document.getElementById('equipment')?.classList.add('hidden');
+            
+            document.getElementById('plantName')?.removeAttribute('required');
+            document.getElementById('animalName')?.setAttribute('required', 'true');
+            document.getElementById('projectName')?.removeAttribute('required');
+            document.getElementById('equipmentName')?.removeAttribute('required');
             break;
           case 'project':
             document.getElementById('project')?.classList.remove('hidden');
             document.getElementById('plant')?.classList.add('hidden');
             document.getElementById('animal')?.classList.add('hidden');
             document.getElementById('equipment')?.classList.add('hidden');
+            
+            document.getElementById('plantName')?.removeAttribute('required');
+            document.getElementById('animalName')?.removeAttribute('required');
+            document.getElementById('projectName')?.setAttribute('required', 'true');
+            document.getElementById('equipmentName')?.removeAttribute('required');
             break;
           case 'equipment':
             document.getElementById('equipment')?.classList.remove('hidden');
             document.getElementById('plant')?.classList.add('hidden');
             document.getElementById('animal')?.classList.add('hidden');
             document.getElementById('project')?.classList.add('hidden');
+            
+            document.getElementById('plantName')?.removeAttribute('required');
+            document.getElementById('animalName')?.removeAttribute('required');
+            document.getElementById('projectName')?.removeAttribute('required');
+            document.getElementById('equipmentName')?.setAttribute('required', 'true');
             break;
         }
       })
   </script>
-
 </form>
