@@ -33,7 +33,7 @@ const equipment = [{
 
 // Initialize types
 //const planttypes = await db.selectDistinct({type: Plants.genus}).from(Plants);
-const planttypes = [{type: "1"}]
+const planttypes = [{type: "Genus1"}]
 const animaltypes = [{type: "1"}]
 const myprojecttypes = [{type: "1"}]
 const equipmenttypes = [{type: "1"}]
@@ -44,25 +44,29 @@ const equipmenttypes = [{type: "1"}]
 		<div class="container project-nav">
 			<div class="project-nav-content">
 				<li class="dropdown">
-					<a class="plants" href="projects#/projects/plants">Plants</a>
+					<a class="all" href="projects#/all">All</a>
+				</li>
+
+				<li class="dropdown">
+					<a class="plants" href="projects#/plants">Plants</a>
 					<div class="dropdown-content">
 						{planttypes.map(({ type }) => (
-							<a href={"projects#/projects/" + type}>{type}</a>
+							<a href={"projects#/plants/" + type}>{type}</a>
 						))}
 					</div>
 				</li>
 
 				<li class="dropdown">
-					<a class="animals" href="projects#/projects/animals">Animals</a>
+					<a class="animals" href="projects#/animals">Animals</a>
 					<div class="dropdown-content">
 						{animaltypes.map(({ type }) => (
-							<a href={"projects#/projects/" + type}>{type}</a>
+							<a href={"projects#/animals/" + type}>{type}</a>
 						))}
 					</div>
 				</li>
 
 				<li class="dropdown">
-					<a class="projects" href="projects#/projects/projects">Projects</a>
+					<a class="projects" href="projects#/projects">Projects</a>
 					<div class="dropdown-content">
 						{myprojecttypes.map(({ type }) => (
 							<a href={"projects#/projects/" + type}>{type}</a>
@@ -71,10 +75,10 @@ const equipmenttypes = [{type: "1"}]
 				</li>
 
 				<li class="dropdown">
-					<a class="equipment" href="projects#/projects/container">Equipment</a>
+					<a class="equipment" href="projects#/equipment">Equipment</a>
 					<div class="dropdown-content">
 						{equipmenttypes.map(({ type }) => (
-							<a href={"projects#/projects/" + type}>{type}</a>
+							<a href={"projects#/equipment/" + type}>{type}</a>
 						))}
 					</div>
 				</li>
@@ -140,5 +144,68 @@ const equipmenttypes = [{type: "1"}]
 				))}
 			</ul>
 		</div>
+		
+		<!--Filter projects based on link-->
+		<script>
+			function filterProjectsByPath() {
+				var path = window.location.hash
+				var parts = path.split("/")
+				var category = parts[1]
+				var type = parts[2]
+				
+				var items = document.querySelectorAll('.link-card')
+				var shown = new Set<Element>()
+				if (category=='all'){
+					items.forEach(item => item.classList.remove('hidden'))
+				} else{
+					items.forEach(item => item.classList.add('hidden'))
+			
+					switch (category) {
+						case'plants':
+							items.forEach(item => {
+								if (item.id == 'plantsItem') {
+									item.classList.remove('hidden')
+									shown.add(item)
+								}
+							})
+							break
+						case 'animals':
+							items.forEach(item => {
+								if (item.id == 'animalsItem') {
+									item.classList.remove('hidden')
+									shown.add(item)
+								}
+							})
+							break
+						case 'projects':
+							items.forEach(item => {
+								if (item.id == 'myprojectsItem') {
+									item.classList.remove('hidden')
+									shown.add(item)
+								}
+							})
+							break
+						case 'equipment':
+							items.forEach(item => {
+								if (item.id == 'equipmentItem') {
+									item.classList.remove('hidden')
+									shown.add(item)
+								}
+							})
+							break
+					}
+
+					if (typeof type !== 'undefined'){
+						shown.forEach(item => {
+						if (!item.classList.contains(type)){
+							item.classList.add('hidden')
+						}
+						})
+					}
+				}
+			}
+			filterProjectsByPath()
+			window.addEventListener('popstate', filterProjectsByPath);
+		</script>
 	</main>
 </Layout>

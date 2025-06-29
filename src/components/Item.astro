@@ -10,9 +10,10 @@ interface Props {
 }
 
 const { href, title, img, type, itemType} = Astro.props;
+const classes = "link-card " + type
 ---
 
-<li class="link-card" id={itemType}>
+<li class={classes} id={itemType}>
 	<a href={href}>
 		<h2>
 			{title}

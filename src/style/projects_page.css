@@ -1,7 +1,7 @@
 @import "project_item.css";
 
 /*hide elements for filter*/
-div.hidden {
+.hidden {
     display: none;
 }
 
