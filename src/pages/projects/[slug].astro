@@ -5,7 +5,7 @@ import "../../style/index_style.css";
 import "../../style/projects_page.css";
 import "../../style/slug.css"
 
-import {db, Plants, MyProjects, Animals, Equipment, eq} from 'astro:db';
+// Import databasetables
 
 const path = Astro.url.pathname;
 const parts = path.split("/");
@@ -17,18 +17,19 @@ const itemType = segments[segments.length - 2];
 var title = "";
 var properties;
 
+// Select right Item
 switch (itemType){
 	case "plants":
-		[properties] = await db.select().from(Plants).where(eq(Plants.idplants, id));
+		[properties] = [{name: "Name1", genus: "Genus1", notes:"Note1", picturePath:""}];
 		break;
 	case "projects":
-		[properties] = await db.select().from(MyProjects).where(eq(MyProjects.idprojects, id));
+		[properties] = [{name: "Name1", type: "Type1", notes:"Note1", picturePath:""}];
 		break;
 	case "animals":
-		[properties] = await db.select().from(Animals).where(eq(Animals.idanimals, id));
+		[properties] = [{name: "Name1", genus: "Genus1", notes:"Note1", picturePath:""}];
 		break;
 	case "equipment":
-		[properties] = await db.select().from(Equipment).where(eq(Equipment.idequipment, id));
+		[properties] = [{name: "Name1", type: "Type1", notes:"Note1", picturePath:""}];
 		break;
 	default:
 		throw new Error("Invalid item type: " + itemType);

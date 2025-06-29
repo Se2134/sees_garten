@@ -1,4 +1,4 @@
-import { column, defineDb, defineTable } from 'astro:db';
+/**import { column, defineDb, defineTable } from 'astro:db';
 
 
 const Plants = defineTable({
@@ -142,3 +142,4 @@ const EquipmentForProject = defineTable({
 export default defineDb({
   tables: { Plants, Animals, Equipment, MyProjects, Enums, ContainerForProject, PlantForProject, AnimalForProject, SubstrateForProject, HardscapeForProject, EquipmentForProject },
 });
+**/

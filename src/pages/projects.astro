@@ -6,17 +6,37 @@ import "../style/projects_page.css"
 import Item from '../components/Item.astro';
 import ProjectPopup from '../components/ProjectPopup.astro';
 
-import {db, Plants, MyProjects, Animals, Equipment} from 'astro:db';
+// Import database tables
 
-const plants = await db.select().from(Plants);
-const myprojects = await db.select().from(MyProjects);
-const animals = await db.select().from(Animals);
-const equipment = await db.select().from(Equipment);
+// Initialize constants for database
+//const plants = await db.select().from(Plants);
+const plants = [{
+	idplants: 1,
+	name: "Name1",
+	genus: "Genus1"
+}]
+const animals = [{
+	idanimals: 1,
+	name: "Name1",
+	genus: "Genus1"
+}]
+const myprojects = [{
+	idprojects: 1,
+	name: "Name1",
+	type: "Type1"
+}]
+const equipment = [{
+	idequipment: 1,
+	name: "Name1",
+	type: "Type1"
+}]
 
-const planttypes = await db.selectDistinct({type: Plants.genus}).from(Plants);
-const myprojecttypes = await db.select({type: MyProjects.type}).from(MyProjects);
-const animaltypes = await db.select({type: Animals.genus}).from(Animals);
-const equipmenttypes = await db.select({type: Equipment.type}).from(Equipment);
+// Initialize types
+//const planttypes = await db.selectDistinct({type: Plants.genus}).from(Plants);
+const planttypes = [{type: "1"}]
+const animaltypes = [{type: "1"}]
+const myprojecttypes = [{type: "1"}]
+const equipmenttypes = [{type: "1"}]
 ---
 
 <Layout title="See's Garten">
@@ -51,7 +71,7 @@ const equipmenttypes = await db.select({type: Equipment.type}).from(Equipment);
 				</li>
 
 				<li class="dropdown">
-					<a class="container" href="projects#/projects/container">Equipment</a>
+					<a class="equipment" href="projects#/projects/container">Equipment</a>
 					<div class="dropdown-content">
 						{equipmenttypes.map(({ type }) => (
 							<a href={"projects#/projects/" + type}>{type}</a>
