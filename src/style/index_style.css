@@ -13,7 +13,7 @@
 header {
     background: linear-gradient(to left, var(--primary), var(--secondary));
     color: var(--primary-content);
-    padding: 10px;
+    padding: 1rem;
     text-align: center;
     position: sticky;
     top: 0;
@@ -24,8 +24,8 @@ header {
 article {
     background-color: var(--background);
     color: var(--copy);
-    padding: 20px;
-    margin-top: 20px;
+    padding: 1rem;
+    margin-top: 1.5rem;
 }
 
 article p, article h2{
@@ -43,36 +43,37 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 80%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 1rem;
 }
 
 h1 {
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 10px;
-    padding: 20px;
+    padding: 1rem;
     text-align: center;
     color: var(--primary-content);
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 10px;
-    padding: 20px;
+    padding: 1rem;
     text-align: center;
     color: var(--primary-content);
 }
 
 p {
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 1.5;
-    margin-bottom: 20px;
 }
 
 a {
     color: var(--copy);
     text-decoration: none;
+}
+
+li {
+    text-align: center;
 }
