@@ -1,22 +1,22 @@
 main{
     display: flex;
-    width: 1440px;
-    padding-bottom: 593px;
+    padding-bottom: 37rem;
     flex-direction: column;
     align-items: center;
-    gap: 72px;
+    gap: 5rem;
 }
 
 .popup{
     display: flex;
-    width: 1065px;
-    padding: 24px;
+    width: 90%;
+    margin: 2rem;
+    padding: 1.5rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 127px;
-    border-radius: 30px;
-    border: 5px solid var(--border, #314E3D);
+    gap: 8rem;
+    border-radius: 2rem;
+    border: 0.25rem solid var(--border, #314E3D);
     background: var(--foreground, #1E2F25);
 }
 
@@ -24,7 +24,7 @@ main{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: 1rem;
     flex: 1 0 0;
 }
 
@@ -32,7 +32,7 @@ main{
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 127px;
+    gap: 8rem;
     align-self: stretch;
 }
 
@@ -40,7 +40,7 @@ main{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 96px;
+    gap: 6rem;
     flex: 1 0 0;
     align-self: stretch;
 }
@@ -49,7 +49,7 @@ img{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 96px;
+    gap: 6rem;
     flex: 1 0 0;
     align-self: stretch;
 }
@@ -63,7 +63,7 @@ img{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: 1rem;
     flex: 1 0 0;
 }
 
@@ -71,7 +71,7 @@ img{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 0.5rem;
     align-self: stretch;
 }
 
@@ -80,7 +80,7 @@ img{
 
     color: var(--primary-content, #EDF6F1);
     font-family: Inter;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -91,7 +91,7 @@ img{
 
     color: var(--primary-content, #EDF6F1);
     font-family: Inter;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -101,14 +101,14 @@ img{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 150px;
+    gap: 10rem;
     align-self: stretch;
 }
 
 .property_notes_key{
     color: var(--primary-content, #EDF6F1);
     font-family: Inter;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -119,7 +119,7 @@ img{
 
     color: var(--primary-content, #EDF6F1);
     font-family: Inter;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;

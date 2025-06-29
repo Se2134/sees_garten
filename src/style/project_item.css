@@ -1,14 +1,14 @@
 .link-card {
     display: flex;
-    width: 345px;
-    height: 345px;
-    padding: 18px 60px;
+    width: 21rem;
+    height: 21rem;
+    padding: 1rem 4rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 19px;
+    gap: 1rem;
     flex-shrink: 0;
-    border-radius: 30px;
+    border-radius: 2rem;
     background: var(--foreground);
 }
 h2 {
@@ -16,7 +16,7 @@ h2 {
     color: var(--content-on-primary);
     text-align: center;
     font-family: Inter;
-    font-size: 20px;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -25,13 +25,14 @@ p {
     color: var(--content-on-primary);
     text-align: center;
     font-family: Inter;
-    font-size: 16px;
+    font-size: 1rem;
+    padding: 0.5rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
 img {
-    width: 225px;
-    height: 225px;
+    width: 14rem;
+    height: 14rem;
     flex-shrink: 0;
 }

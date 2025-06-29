@@ -1,27 +1,27 @@
 #plantsItem{
     color: var(--primary-content, #EDF6F1);
-    border-radius: 30px;
-    border: 1px solid var(--border, #314E3D);
+    border-radius: 2rem;
+    border: 2px solid var(--border, #314E3D);
     background: var(--foreground, #1E2F25);
 }
 
 #animalsItem{
     color: var(--secondary-content, #EDF2F6);
-    border-radius: 30px;
-    border: 1px solid var(--secondary-border, #31424E);
+    border-radius: 2rem;
+    border: 2px solid var(--secondary-border, #31424E);
     background: var(--secondary-foreground, #1E282F);
 }
 
 #equipmentItem{
     color: var(--quaternary-content, #F6F1ED);
-    border-radius: 30px;
-    border: 1px solid var(--quaternary-border, #4E3D31);
+    border-radius: 2rem;
+    border: 2px solid var(--quaternary-border, #4E3D31);
     background: var(--quaternary-foreground, #2F251E);
 }
 
 #myprojectsItem{
     color: var(--tertiary-content, #F1EDF6);
-    border-radius: 30px;
-    border: 1px solid var(--tertiary-border, #3D314E);
+    border-radius: 2rem;
+    border: 2px solid var(--tertiary-border, #3D314E);
     background: var(--tertiary-foreground, #251E2F);
 }
