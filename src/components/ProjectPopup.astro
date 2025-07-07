@@ -1,6 +1,5 @@
 ---
 import '../style/project_popup.css'
-import fs from 'fs';
 
 // Import datatables
 import { eq } from 'astro:db';
@@ -43,6 +42,7 @@ const enums = [{
     enumValue: "Value1"
 }]
 
+// Get the form data and insert it into database
 if (Astro.request.method === 'POST') {
   try {
     const formData = await Astro.request.formData();
@@ -122,8 +122,10 @@ if (Astro.request.method === 'POST') {
 }
 ---
 
+<!-- Form to add database entry -->
 <form method="POST" autocomplete="off" enctype="multipart/form-data">
 
+  <!-- Choose type of entry (plant, animal, project, equipment) -->
   <label class="dbtype">Type
     <select name="dbtype" id="dbtype" required>
       <option value="plant">Plant</option>
@@ -133,6 +135,7 @@ if (Astro.request.method === 'POST') {
     </select>
   </label>
 
+  <!-- Form for plants -->
   <div id="plant" class="valuesWrapper">
     <div class="group">
       <label>Name
@@ -245,6 +248,7 @@ if (Astro.request.method === 'POST') {
     </div>
 
     <div class="group">
+      <!-- Choose substrate from existing substrates in equipment -->
       <label>Substrate
         <select name="substrate">
           <option value="/">/</option>
@@ -265,6 +269,7 @@ if (Astro.request.method === 'POST') {
     </div>
 
     <div class="group">
+      <!-- Choose fertilizer from existing fertilizers in equipment -->
       <label>Fertilizer
         <select name="fertilizing">
           <option value="/">/</option>
@@ -292,6 +297,7 @@ if (Astro.request.method === 'POST') {
     </label>
   </div>
   
+  <!-- Form for animals -->
   <div id="animal" class="valuesWrapper hidden">
     <div class="group">
       <label>Name
@@ -465,12 +471,14 @@ if (Astro.request.method === 'POST') {
     </label>
   </div>
 
+  <!-- Form for projects -->
   <div id="project" class="valuesWrapper hidden">
     <div class="group">
       <label>Name
         <input type="text" name="name" id="projectName"/>
       </label>
     
+      <!-- Choose container from existing container in equipment -->
       <label>Container
         <select name="container">
           <option value="/">/</option>
@@ -482,6 +490,7 @@ if (Astro.request.method === 'POST') {
     </div>
 
     <div class="group">
+      <!-- Choose equipment from existing equipment -->
       <label>Equipment
         <select name="equipment">
           <option value="/">/</option>
@@ -497,6 +506,7 @@ if (Astro.request.method === 'POST') {
     </div>
 
     <div class="group">
+      <!-- Choose substrate from existing substrates in equipment -->
       <label>Substrate
         <select name="substrate">
           <option value="/">/</option>
@@ -506,6 +516,7 @@ if (Astro.request.method === 'POST') {
         </select>
       </label>
 
+      <!-- Choose hardscape from existing hardscape in equipment -->
       <label>Hardscape
         <select name="hardscape">
           <option value="/">/</option>
@@ -516,6 +527,7 @@ if (Astro.request.method === 'POST') {
       </label>
     </div>
 
+    <!-- Choose plants from existing plants -->
     <div class="group">
       <label>Plants
         <select name="container">
@@ -526,6 +538,7 @@ if (Astro.request.method === 'POST') {
         </select>
       </label>
 
+      <!-- Choose animals from existing animals -->
       <label>Animals
         <select name="animals">
           <option value="/">/</option>
@@ -555,6 +568,7 @@ if (Astro.request.method === 'POST') {
     </label>
   </div>
 
+  <!-- Form for equipment -->
   <div id="equipment" class="valuesWrapper hidden">
     <div class="group">
       <label>Name
@@ -603,13 +617,16 @@ if (Astro.request.method === 'POST') {
       <input type="text" name="notes"/>
     </label>
   </div>
-	
+  
+  <!-- Buttons to accept or cancel form -->
   <div class="container buttons">
     <button data-cancel-button type="reset">Cancel</button>
     <button type="submit">Submit</button>
   </div>
 
+  <!-- Change the form depending on entry type -->
   <script>
+    // Cancel-Button hides the popup
     const buttons = document.querySelectorAll('[data-cancel-button]');
     buttons.forEach( (button) => {
       button.addEventListener('click', () => {
@@ -618,6 +635,7 @@ if (Astro.request.method === 'POST') {
       });
     })
 
+    // Change visibility based on entry type
     const dbtype = document.getElementById('dbtype') as HTMLSelectElement;
       dbtype?.addEventListener('change', () => {
         switch (dbtype.value) {

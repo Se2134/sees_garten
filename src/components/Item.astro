@@ -1,15 +1,19 @@
 ---
 import '../style/item_style.css';
 
+// Properties of the project
 interface Props {
-	title: string;
-	img: string;
-	type: string;
-	href: string;
-	itemType: string;
+	title: string;		// The title
+	img: string;		// Picture src
+	type: string;		// Type for project/equipment the genus for plants/animals
+	href: string;		// Link to the [slug] page
+	itemType: string;	// Plant/Animal/Project/Equipment
 }
 
+// Get the properties
 const { href, title, img, type, itemType} = Astro.props;
+
+// Dynamic classes for filter
 const classes = "link-card " + type
 ---
 

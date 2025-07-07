@@ -1,10 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Item from '../components/Item.astro';
+import ProjectPopup from '../components/ProjectPopup.astro';
 import "../style/nav_footer.css";
 import "../style/index_style.css";
 import "../style/projects_page.css"
-import Item from '../components/Item.astro';
-import ProjectPopup from '../components/ProjectPopup.astro';
 
 // Import database tables
 
@@ -41,12 +41,14 @@ const equipmenttypes = [{type: "1"}]
 
 <Layout title="See's Garten">
 	<main>
+		<!-- "Navigationbar" for filtering projects -->
 		<div class="container project-nav">
 			<div class="project-nav-content">
 				<li class="dropdown">
 					<a class="all" href="projects#/all">All</a>
 				</li>
 
+				<!-- Dropdown for types of plants -->
 				<li class="dropdown">
 					<a class="plants" href="projects#/plants">Plants</a>
 					<div class="dropdown-content">
@@ -56,6 +58,7 @@ const equipmenttypes = [{type: "1"}]
 					</div>
 				</li>
 
+				<!-- Dropdown for types of animals -->
 				<li class="dropdown">
 					<a class="animals" href="projects#/animals">Animals</a>
 					<div class="dropdown-content">
@@ -65,6 +68,7 @@ const equipmenttypes = [{type: "1"}]
 					</div>
 				</li>
 
+				<!-- Dropdown for types of projects -->
 				<li class="dropdown">
 					<a class="projects" href="projects#/projects">Projects</a>
 					<div class="dropdown-content">
@@ -74,6 +78,7 @@ const equipmenttypes = [{type: "1"}]
 					</div>
 				</li>
 
+				<!-- Dropdown for types of equipment -->
 				<li class="dropdown">
 					<a class="equipment" href="projects#/equipment">Equipment</a>
 					<div class="dropdown-content">
@@ -84,10 +89,12 @@ const equipmenttypes = [{type: "1"}]
 				</li>
 			</div>
 
+			<!-- Button to open popup to add new project to database -->
 			<button data-projectAdd-button type="button" id="project-nav-add">
 				+
 			</button>
 
+			<!-- Show popup at button click -->
 			<script>
 				const buttons = document.querySelectorAll('[data-projectAdd-button]');
 				buttons.forEach( (button) => {
@@ -97,15 +104,17 @@ const equipmenttypes = [{type: "1"}]
 					});
 				})
 			</script>
-
 		</div>
+
 		<div class="container">
 
+			<!-- Container with popup inside initially hidden -->
 			<div id="popupContainer" class="hidden">
 				<ProjectPopup id="addPopup"></ProjectPopup>
 			</div>
 
 			<ul role="list" class="projects_items">
+				<!-- List all plants -->
 				{plants.map(({ name, genus, idplants}) => (
 					<Item
 						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-plants-${idplants}`}
@@ -115,6 +124,8 @@ const equipmenttypes = [{type: "1"}]
 						itemType='plantsItem'
 						/>
 				))}
+
+				<!-- List all animals -->
 				{animals.map(({ name, genus, idanimals}) => (
 					<Item
 						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-animals-${idanimals}`}
@@ -124,6 +135,8 @@ const equipmenttypes = [{type: "1"}]
 						itemType='animalsItem'
 					/>
 				))}
+
+				<!-- List all projects -->
 				{myprojects.map(({ name, type, idprojects}) => (
 					<Item
 						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-myprojects-${idprojects}`}
@@ -133,6 +146,8 @@ const equipmenttypes = [{type: "1"}]
 						itemType='myprojectsItem'
 					/>
 				))}
+
+				<!-- List all equipment -->
 				{equipment.map(({ name, type, idequipment}) => (
 					<Item
 						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-equipment-${idequipment}`}
@@ -205,6 +220,8 @@ const equipmenttypes = [{type: "1"}]
 				}
 			}
 			filterProjectsByPath()
+
+			// Refresh list on popstate
 			window.addEventListener('popstate', filterProjectsByPath);
 		</script>
 	</main>

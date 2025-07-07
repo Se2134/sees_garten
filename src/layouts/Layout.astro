@@ -3,9 +3,10 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 interface Props {
-	title: string;
+	title: string;	// Title of the page
 }
 
+// Get the property
 const { title } = Astro.props;
 ---
 
@@ -15,13 +16,15 @@ const { title } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+
+		<!-- Dynamic title -->
 		<title>{title}</title>
 	</head>
 	<body>
 		<Header/>
 
+		<!-- Content of the page -->
 		<slot />
 
 		<Footer />

@@ -5,19 +5,17 @@ import "../../style/index_style.css";
 import "../../style/projects_page.css";
 import "../../style/slug.css"
 
-// Import databasetables
-
+// Extract id and itemType from the current URL
 const path = Astro.url.pathname;
 const parts = path.split("/");
 const segments = parts[2].split("-");
-
 const id = Number(segments[segments.length - 1]);
 const itemType = segments[segments.length - 2];
 
 var title = "";
 var properties;
 
-// Select right Item
+// Select the right item properties based on itemType (later via database)
 switch (itemType){
 	case "plants":
 		[properties] = [{name: "Name1", genus: "Genus1", notes:"Note1", picturePath:"N/A"}];
@@ -32,9 +30,11 @@ switch (itemType){
 		[properties] = [{name: "Name1", type: "Type1", notes:"Note1", picturePath:"N/A"}];
 		break;
 	default:
+		// Throw error if itemType is invalid
 		throw new Error("Invalid item type: " + itemType);
 }
 
+// Set the page title from the item's name
 title = properties.name;
 ---
 
@@ -45,18 +45,18 @@ title = properties.name;
 			<div class="container_all">
 				<div class="pic_property_container">
 					<div class="property_container">
+						<!-- Render all properties except notes and picturePath -->
 						{Object.entries(properties).filter(([key]) => key !== "notes" && key !== "picturePath").map(([key, value]) => {
 							return(
-								
 								<div class="property">
 									<div class="property_key">{key}</div>
 									<div class="property_value">{value}</div>
 								</div>
-								)
-							}
-						)}
+							)
+						})}
 					</div>
 					<div class="pic_container">
+						<!-- Show default image if picturePath is "N/A" -->
 						<img src={properties.picturePath == "N/A"? "/src/images/plants/Monstera Deliciosa.png":properties.picturePath}>
 						<div class="placeholder"></div>
 					</div>
