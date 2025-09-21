@@ -1,6 +1,6 @@
 # Sees Garten
 
-## Welcome to **Sees Garten**! This project is a web application built with [Astro](https://astro.build/) primarily for gaining experience in website development. The site struckturs data about my plants and aquarium based on a database.
+## Welcome to **Sees Garten**! This project is a web application built with [Astro](https://astro.build/) primarily for gaining experience in website development. The site structures data about my plants and aquarium based on a database.
 
 ## Getting Started
 
@@ -32,11 +32,11 @@
 
 Contributions are welcome! Please open issues or pull requests for suggestions and improvements.
 
-## Comming next
+## Coming next
 
 - Connect database
-- Add a methode to change data in database
-- Change Home to represent a better landingpage
+- Add a method to change data in database
+- Change Home to represent a better landing page
 
 ## License
 
