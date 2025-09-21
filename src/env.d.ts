@@ -1,3 +1,3 @@
 /// <reference path="../.astro/types.d.ts" />
-ASTRO_DB_REMOTE_URL="libsql://sees-garten-idot.turso.io";
-ASTRO_DB_APP_TOKEN="eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzI2MTYyOTUsImlkIjoiNzY0YTYyOGQtNWFlOS00MDdjLWFkNGMtNTNkN2M3NjUzZWYzIn0.dlriJwA9fDEsR5ezdIs4kB9W3P2_WxmWbMLMUW7WqK_5weMaRUEGI4M3ldnChmo03_UxgWIZP8sD6HwdUVROCA";
+ASTRO_DB_REMOTE_URL="libsql://gartendb-se2134.aws-eu-west-1.turso.io";
+ASTRO_DB_APP_TOKEN="eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3NTU3MDUyMDcsImlkIjoiYzhjODlhZjgtYzgyNC00NDViLTlhM2ItMTI0MTkxNzI1NmRiIiwicmlkIjoiYjk0ODk1MzAtY2JmNy00OGFhLWI0ZjMtMWQ2YWZmMGJiMDFlIn0._7yyPdNew8d9f6jxjVm9aLZBrnoe2tRd36vk_dwc9II2dR2D0bLrCiN4LAPvPLMkyF3EGfwLmg4FK8QV8_JnDg";
