@@ -32,11 +32,21 @@
 
 Contributions are welcome! Please open issues or pull requests for suggestions and improvements.
 
+## Latest Update
+
+A development database is now connected
+
 ## Coming next
 
-- Connect database
+- Redesigning the "Add Project"-Popup to fit the new database schema
+- Designing the Page for individual projects
+- Adding the real Turso Database
 - Add a method to change data in database
 - Change Home to represent a better landing page
+
+## Database concept
+
+![](public\images\miscellaneous\sees_garten_db.png "Database model")
 
 ## License
 

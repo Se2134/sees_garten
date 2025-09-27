@@ -1,3 +1,10 @@
-/// <reference path="../.astro/types.d.ts" />
-ASTRO_DB_REMOTE_URL="libsql://gartendb-se2134.aws-eu-west-1.turso.io";
-ASTRO_DB_APP_TOKEN="eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3NTU3MDUyMDcsImlkIjoiYzhjODlhZjgtYzgyNC00NDViLTlhM2ItMTI0MTkxNzI1NmRiIiwicmlkIjoiYjk0ODk1MzAtY2JmNy00OGFhLWI0ZjMtMWQ2YWZmMGJiMDFlIn0._7yyPdNew8d9f6jxjVm9aLZBrnoe2tRd36vk_dwc9II2dR2D0bLrCiN4LAPvPLMkyF3EGfwLmg4FK8QV8_JnDg";
+/// <reference types="astro/client" />
+
+interface ImportMetaEnv {
+  readonly ASTRO_DB_REMOTE_URL: string;
+  readonly ASTRO_DB_APP_TOKEN: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}

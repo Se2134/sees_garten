@@ -5,38 +5,19 @@ import ProjectPopup from '../components/ProjectPopup.astro';
 import "../style/nav_footer.css";
 import "../style/index_style.css";
 import "../style/projects_page.css"
+import { turso, rowsToObject } from "../scripts/db.js";
 
 // Import database tables
-
-// Initialize constants for database
-//const plants = await db.select().from(Plants);
-const plants = [{
-	idplants: 1,
-	name: "Name1",
-	genus: "Genus1"
-}]
-const animals = [{
-	idanimals: 1,
-	name: "Name1",
-	genus: "Genus1"
-}]
-const myprojects = [{
-	idprojects: 1,
-	name: "Name1",
-	type: "Type1"
-}]
-const equipment = [{
-	idequipment: 1,
-	name: "Name1",
-	type: "Type1"
-}]
+const plants = rowsToObject(await turso.execute('SELECT * FROM plant JOIN plantSpecies ON plantSpecies.id = plant.speciesID'))
+const animals = rowsToObject(await turso.execute('SELECT * FROM animal JOIN animalSpecies ON animalSpecies.id = animal.speciesID'))
+const myprojects = rowsToObject(await turso.execute('SELECT * FROM project'))
+const equipment = rowsToObject(await turso.execute('SELECT * FROM equipment JOIN equipmentType ON equipmentType.id = equipment.typeID'))
 
 // Initialize types
-//const planttypes = await db.selectDistinct({type: Plants.genus}).from(Plants);
-const planttypes = [{type: "Genus1"}]
-const animaltypes = [{type: "1"}]
-const myprojecttypes = [{type: "1"}]
-const equipmenttypes = [{type: "1"}]
+const planttypes = rowsToObject(await turso.execute('SELECT DISTINCT genus FROM plantSpecies'))
+const animaltypes = rowsToObject(await turso.execute('SELECT DISTINCT genus FROM animalSpecies'))
+const myprojecttypes = rowsToObject(await turso.execute('SELECT DISTINCT type FROM project'))
+const equipmenttypes = rowsToObject(await turso.execute('SELECT DISTINCT type FROM equipmentType'))
 ---
 
 <Layout title="See's Garten">
@@ -52,8 +33,8 @@ const equipmenttypes = [{type: "1"}]
 				<li class="dropdown">
 					<a class="plants" href="projects#/plants">Plants</a>
 					<div class="dropdown-content">
-						{planttypes.map(({ type }) => (
-							<a href={"projects#/plants/" + type}>{type}</a>
+						{planttypes.map(({ genus }) => (
+							<a href={"projects#/plants/" + genus}>{genus}</a>
 						))}
 					</div>
 				</li>
@@ -62,8 +43,8 @@ const equipmenttypes = [{type: "1"}]
 				<li class="dropdown">
 					<a class="animals" href="projects#/animals">Animals</a>
 					<div class="dropdown-content">
-						{animaltypes.map(({ type }) => (
-							<a href={"projects#/animals/" + type}>{type}</a>
+						{animaltypes.map(({ genus }) => (
+							<a href={"projects#/animals/" + genus}>{genus}</a>
 						))}
 					</div>
 				</li>
@@ -115,9 +96,9 @@ const equipmenttypes = [{type: "1"}]
 
 			<ul role="list" class="projects_items">
 				<!-- List all plants -->
-				{plants.map(({ name, genus, idplants}) => (
+				{plants.map(({ id, name, genus }) => (
 					<Item
-						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-plants-${idplants}`}
+						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-plants-${id}`}
 						title={name}
 						type={genus}
 						img="/images/plants/Monstera Deliciosa.png"
@@ -126,9 +107,9 @@ const equipmenttypes = [{type: "1"}]
 				))}
 
 				<!-- List all animals -->
-				{animals.map(({ name, genus, idanimals}) => (
+				{animals.map(({ id, name, genus }) => (
 					<Item
-						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-animals-${idanimals}`}
+						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-animals-${id}`}
 						title={name}
 						type={genus}
 						img="/images/plants/Monstera Deliciosa.png"
@@ -137,9 +118,9 @@ const equipmenttypes = [{type: "1"}]
 				))}
 
 				<!-- List all projects -->
-				{myprojects.map(({ name, type, idprojects}) => (
+				{myprojects.map(({ id, name, type}) => (
 					<Item
-						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-myprojects-${idprojects}`}
+						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-myprojects-${id}`}
 						title={name}
 						type={type}
 						img="/images/plants/Monstera Deliciosa.png"
@@ -148,9 +129,9 @@ const equipmenttypes = [{type: "1"}]
 				))}
 
 				<!-- List all equipment -->
-				{equipment.map(({ name, type, idequipment}) => (
+				{equipment.map(({ id, name, type}) => (
 					<Item
-						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-equipment-${idequipment}`}
+						href={`/projects/${name.toLowerCase().replace(/[\s_-]+/g, '-')}-equipment-${id}`}
 						title={name}
 						type={type}
 						img="/images/plants/Monstera Deliciosa.png"
