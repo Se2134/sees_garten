@@ -2,10 +2,7 @@ import { createClient, type ResultSet } from '@libsql/client';
 import "dotenv/config";
 
 export const turso = createClient({
-  //url: process.env.ASTRO_DB_REMOTE_URL!,
-
-  //local development database:
-  url: "file:db\\sees_garten.db",
+  url: process.env.ASTRO_DB_REMOTE_URL!,
   authToken: process.env.ASTRO_DB_APP_TOKEN!,
 });
 
