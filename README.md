@@ -51,3 +51,7 @@ A development database is now connected
 ## License
 
 This project is licensed under the MIT License.
+
+## Credits
+
+<a href="https://www.flaticon.com/free-icons/leaves" title="leaves icons">Leaves icons created by Maan Icons - Flaticon</a>
